@@ -1,0 +1,37 @@
+---
+import NewsLayout from '../../../../layouts/NewsLayout.astro';
+import { CATEGORIES, getNewsByCategory } from '../../../../utils/newsUtils.js';
+
+export async function getStaticPaths() {
+  const paths = [];
+  
+  for (const category of Object.keys(CATEGORIES)) {
+    const news = await getNewsByCategory(category);
+    
+    for (const article of news) {
+      paths.push({
+        params: { 
+          category: category,
+          slug: article.slug 
+        },
+        props: { article }
+      });
+    }
+  }
+  
+  return paths;
+}
+
+const { article } = Astro.props;
+---
+
+<NewsLayout 
+  title={article.title}
+  description={article.excerpt}
+  category={article.category}
+  date={article.date}
+  author={article.author}
+  image={article.categoryInfo?.icon}
+>
+  <Fragment set:html={article.content} />
+</NewsLayout>

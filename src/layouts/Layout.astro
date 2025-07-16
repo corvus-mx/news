@@ -1,0 +1,137 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Corvus News - Periodismo Independiente por la Soberanía de México" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="light dark">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="topbar" id="topbar">
+    <div class="topbar-container">
+      <a href="/" class="topbar-brand">
+        <span class="brand-text">Corvus News</span>
+      </a>
+      
+      <div class="nav-desktop">
+        <a href="/noticias/" class="nav-link">Ultimas Noticias</a>
+        <a href="/feeds/" class="nav-link">Categorias</a>
+        <a href="/guia/" class="nav-link">Guía Segura</a>
+        <a href="/mirrors/" class="nav-link">Mirrors</a>
+        <a href="/contacto/" class="nav-cta">Contacto</a>
+      </div>
+      
+      <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Abrir menú">
+        <span id="menu-icon">☰</span>
+      </button>
+    </div>
+    
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="/noticias/" class="nav-link">Ultimas Noticias</a>
+      <a href="/feeds/" class="nav-link">Categorias</a>
+      <a href="/guia/" class="nav-link">Guía Segura</a>
+      <a href="/mirrors/" class="nav-link">Mirrors</a>
+      <a href="/contacto/" class="nav-cta">Contacto</a>
+    </div>
+  </nav>
+
+  <main>
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Corvus News</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+          Periodismo independiente al servicio de México. Defendemos la soberanía a través de la verdad.
+        </p>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Noticias</h3>
+        <ul>
+          <li><a href="/noticias/">Todas las Noticias</a></li>
+          <li><a href="/feeds/">Categorías</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Para Fuentes</h3>
+        <ul>
+          <li><a href="/contacto/">Contacto Seguro</a></li>
+          <li><a href="/guia/">Guía de Seguridad</a></li>
+          <li><a href="/mirrors/">Acceso Alternativo</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Transparencia</h3>
+        <ul>
+          <li><a href="#">Metodología</a></li>
+          <li><a href="#">Código de Ética</a></li>
+          <li><a href="#">Financiamiento</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Corvus News. Periodismo independiente por la soberanía de México.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+      const mobileNav = document.getElementById('nav-mobile');
+      const menuIcon = document.getElementById('menu-icon');
+      
+      mobileNav.classList.toggle('show');
+      menuIcon.textContent = mobileNav.classList.contains('show') ? '✕' : '☰';
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const mobileNav = document.getElementById('nav-mobile');
+      const menuToggle = document.querySelector('.menu-toggle');
+      
+      if (!mobileNav.contains(event.target) && !menuToggle.contains(event.target)) {
+        mobileNav.classList.remove('show');
+        document.getElementById('menu-icon').textContent = '☰';
+      }
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const topbar = document.getElementById('topbar');
+      if (window.scrollY > 100) {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        topbar.style.background = isDark ? 'rgba(0, 0, 0, 0.98)' : 'rgba(255, 255, 255, 0.98)';
+        topbar.style.boxShadow = isDark ? '0 4px 20px rgba(255, 255, 255, 0.1)' : '0 4px 20px rgba(0, 0, 0, 0.1)';
+      } else {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        topbar.style.background = isDark ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+        topbar.style.boxShadow = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

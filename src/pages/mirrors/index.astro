@@ -1,0 +1,213 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Mirrors y Backups · Corvus News">
+  <style>
+    .mirrors-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .mirrors-hero {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 3rem 0;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-primary);
+    }
+    
+    .mirrors-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    .mirrors-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+    
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--success);
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-xl);
+      color: var(--success);
+      font-weight: 600;
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .mirrors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .mirror-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      transition: var(--transition);
+    }
+    
+    .mirror-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-primary);
+    }
+    
+    .mirror-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    .mirror-description {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    
+    .mirror-url {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .mirror-link {
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: var(--accent-primary);
+      word-break: break-all;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    
+    .mirror-status {
+      font-size: 0.75rem;
+      color: var(--success);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    .mirror-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      border-radius: var(--radius-xl);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      font-size: 1.125rem;
+      background: var(--accent-primary);
+      color: var(--bg-primary);
+    }
+    
+    .mirror-action:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    @media (max-width: 768px) {
+      .mirrors-container {
+        padding: 1rem;
+      }
+      
+      .mirrors-title {
+        font-size: 2rem;
+      }
+      
+      .mirrors-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <br/><br/><br/>
+  
+  <div class="mirrors-container">
+    <!-- Hero Section -->
+    <section class="mirrors-hero">
+      <h1 class="mirrors-title">Mirrors & Backups</h1>
+      <p class="mirrors-subtitle">
+        Red distribuida imposible de censurar. Acceso garantizado desde cualquier lugar del mundo.
+      </p>
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        Todos los mirrors operativos
+      </div>
+    </section>
+
+    <!-- Mirrors Grid -->
+    <section class="mirrors-grid">
+      <!-- Main Mirror -->
+      <div class="mirror-card">
+        <h2 class="mirror-title">Mirror Principal</h2>
+        <p class="mirror-description">
+          Nuestro mirror principal con acceso directo y rápido. Utiliza HTTPS y está optimizado 
+          para velocidad y disponibilidad máxima.
+        </p>
+        
+        <div class="mirror-url">
+          <span class="mirror-link">https://corvus-mx.github.io/news/</span>
+          <div class="mirror-status">
+            <span class="status-dot"></span>
+            Operativo - Latencia: 45ms
+          </div>
+        </div>
+        
+        <a href="https://corvus-mx.github.io/news/" class="mirror-action" target="_blank">
+          Acceder al Mirror
+        </a>
+      </div>
+
+      <!-- Backup Mirror -->
+      <div class="mirror-card">
+        <h2 class="mirror-title">Mirror de Respaldo</h2>
+        <p class="mirror-description">
+          Mirror secundario alojado en infraestructura independiente. Activo en caso de que el principal no esté disponible.
+        </p>
+        
+        <div class="mirror-url">
+          <span class="mirror-link">Netlify Backup</span>
+          <div class="mirror-status">
+            <span class="status-dot"></span>
+            Operativo - Activo
+          </div>
+        </div>
+        
+        <a href="#" class="mirror-action">
+          Acceder al Backup
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>

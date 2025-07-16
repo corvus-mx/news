@@ -1,0 +1,167 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { CATEGORIES, getNewsByCategory } from '../../utils/newsUtils.js';
+
+// Obtener estadísticas de cada categoría
+const categoryStats = {};
+for (const [key, info] of Object.entries(CATEGORIES)) {
+  const news = await getNewsByCategory(key);
+  categoryStats[key] = {
+    ...info,
+    count: news.length,
+    lastUpdate: news.length > 0 ? news[0].date : null
+  };
+}
+---
+
+<Layout title="Noticias por Categoría · Corvus News">
+  <style>
+    .feeds-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .feeds-hero {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 3rem 0;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-primary);
+    }
+    
+    .feeds-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    .feeds-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .category-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      transition: var(--transition);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-primary);
+    }
+    
+    .category-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    
+    .category-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    .category-description {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    
+    .category-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    
+    .category-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      border-radius: var(--radius-xl);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      font-size: 1.125rem;
+      color: white;
+    }
+    
+    .category-action:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    @media (max-width: 768px) {
+      .feeds-container {
+        padding: 1rem;
+      }
+      
+      .feeds-title {
+        font-size: 2rem;
+      }
+      
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <br/><br/><br/>
+  
+  <div class="feeds-container">
+    <!-- Hero Section -->
+    <section class="feeds-hero">
+      <h1 class="feeds-title">Noticias por Categoría</h1>
+      <p class="feeds-subtitle">
+        Noticias organizadas por temas específicos para un seguimiento más preciso
+      </p>
+    </section>
+
+    <!-- Categories Grid -->
+    <section class="categories-grid">
+      {Object.entries(categoryStats).map(([key, stats]) => (
+        <div class="category-card" style={`border-color: ${stats.color}`}>
+          <span class="category-icon" style={`color: ${stats.color}`}>{stats.icon}</span>
+          <h2 class="category-title">{stats.name}</h2>
+          <p class="category-description">
+            {key === 'soberania' && 'Noticias sobre defensa de la soberanía nacional, independencia energética, decisiones estratégicas y protección de recursos naturales.'}
+            {key === 'corrupcion-justicia' && 'Investigaciones sobre corrupción, abuso de poder, impunidad y funcionamiento del sistema de justicia mexicano.'}
+            {key === 'internacional-geopolitica' && 'Análisis de relaciones internacionales, influencia extranjera, tratados comerciales y posición de México en el mundo.'}
+            {key === 'crimen-organizado' && 'Investigaciones sobre narcotráfico, lavado de dinero, vínculos con autoridades y impacto en la seguridad nacional.'}
+          </p>
+          <div class="category-stats">
+            <span>{stats.count} noticias</span>
+            <span>{stats.lastUpdate ? 'Actualizado recientemente' : 'Sin noticias'}</span>
+          </div>
+          <a href={`/feeds/${key}/`} class="category-action" style={`background: ${stats.color}`}>
+            Ver Noticias
+          </a>
+        </div>
+      ))}
+    </section>
+  </div>
+</Layout>

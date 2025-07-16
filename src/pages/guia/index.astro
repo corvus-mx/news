@@ -1,0 +1,166 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Guía de Seguridad para Filtraciones · Corvus News">
+  <style>
+    .guide-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .guide-hero {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 3rem 0;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-primary);
+    }
+    
+    .guide-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    .guide-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+    
+    .guide-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+    
+    .step-list {
+      list-style: none;
+      counter-reset: step-counter;
+    }
+    
+    .step-item {
+      counter-increment: step-counter;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--accent-primary);
+      position: relative;
+    }
+    
+    .step-item::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: -2px;
+      top: -10px;
+      background: var(--accent-primary);
+      color: var(--bg-primary);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+    
+    .step-title {
+      font-weight: 700;
+      font-size: 1.125rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+    
+    .step-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+      .guide-container {
+        padding: 1rem;
+      }
+      
+      .guide-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+
+  <br/><br/><br/>
+  
+  <div class="guide-container">
+    <!-- Hero Section -->
+    <section class="guide-hero">
+      <h1 class="guide-title">Guía de Seguridad</h1>
+      <p class="guide-subtitle">
+        Aprende cómo enviar filtraciones de forma completamente segura y anónima
+      </p>
+    </section>
+
+    <!-- Step by Step Guide -->
+    <section class="guide-section">
+      <h2 class="section-title">Pasos para una Filtración Segura</h2>
+      
+      <ol class="step-list">
+        <li class="step-item">
+          <h3 class="step-title">Prepara tu Evidencia</h3>
+          <p class="step-description">
+            Antes de enviar cualquier documento, foto o audio, elimina todos los metadatos 
+            (autor, ubicación, fecha de creación). Borra cualquier información personal 
+            que pueda identificarte. Usa herramientas como ExifTool o aplicaciones de limpieza de metadatos.
+          </p>
+        </li>
+        
+        <li class="step-item">
+          <h3 class="step-title">Conéctate de Forma Segura</h3>
+          <p class="step-description">
+            Usa una conexión privada y confiable. Evita WiFi públicos, cibercafés o redes compartidas. 
+            Si es posible, utiliza una VPN confiable o la red Tor para ocultar tu ubicación real.
+          </p>
+        </li>
+        
+        <li class="step-item">
+          <h3 class="step-title">Abre tu cuenta en ProtonMail</h3>
+          <p class="step-description">
+            Te recomendamos no abrir cuenta con tus datos reales, crea un alias o usa correos temporales.
+            ProtonMail es nuestra elección de confianza
+          </p>
+        </li>
+        
+        <li class="step-item">
+          <h3 class="step-title">Redacta tu Mensaje</h3>
+          <p class="step-description">
+            <strong>NUNCA</strong> incluyas tu nombre real, datos personales, o información que pueda identificarte. 
+            Describe los hechos de forma objetiva, incluye contexto relevante y especifica por qué es importante para el interés público.
+          </p>
+        </li>
+        
+        <li class="step-item">
+          <h3 class="step-title">Envía y Mantente Seguro</h3>
+          <p class="step-description">
+            Después de enviar tu filtración, elimina cualquier rastro de la comunicación de tus dispositivos. 
+            Nuestro equipo se pondrá en contacto contigo solo si es absolutamente necesario para verificar información.
+          </p>
+        </li>
+      </ol>
+    </section>
+  </div>
+</Layout>

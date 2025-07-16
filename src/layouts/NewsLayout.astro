@@ -1,0 +1,235 @@
+---
+import Layout from './Layout.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  category: string;
+  date: string;
+  author: string;
+  image?: string;
+}
+
+const { title, description, category, date, author, image } = Astro.props;
+
+import { CATEGORIES, formatDateTime } from '../utils/newsUtils.js';
+const categoryInfo = CATEGORIES[category];
+---
+
+<Layout title={title} description={description}>
+  <style>
+    .article-page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 3rem;
+      padding-top: 120px;
+    }
+    
+    .article-author-sidebar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      height: fit-content;
+      position: sticky;
+      top: 120px;
+    }
+    
+    .author-avatar {
+      width: 80px;
+      height: 80px;
+      background: var(--bg-secondary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem auto;
+      font-size: 2rem;
+    }
+    
+    .author-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    
+    .author-role {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+    
+    .author-bio {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+    
+    .article-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+    }
+    
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+    
+    .article-category {
+      background: var(--accent-primary);
+      color: var(--bg-primary);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .article-title {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+    
+    .article-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    
+    .article-image {
+      width: 100%;
+      height: 300px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: var(--text-light);
+      opacity: 0.3;
+    }
+    
+    .article-body {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-size: 1.1rem;
+    }
+    
+    .article-body h2 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 2rem 0 1rem 0;
+    }
+    
+    .article-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 1.5rem 0 1rem 0;
+    }
+    
+    .article-body p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .article-body ul, .article-body ol {
+      margin: 1.5rem 0;
+      padding-left: 2rem;
+    }
+    
+    .article-body li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .article-body strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    
+    @media (max-width: 1024px) {
+      .article-page-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1rem;
+        padding-top: 100px;
+      }
+      
+      .article-author-sidebar {
+        position: static;
+        order: 2;
+      }
+      
+      .article-content {
+        padding: 2rem;
+      }
+      
+      .article-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+
+  <div class="article-page-container">
+    <aside class="article-author-sidebar">
+      <div class="author-avatar">
+        <span>👤</span>
+      </div>
+      <h3 class="author-name">{author}</h3>
+      <p class="author-role">Periodista de Investigación Independiente</p>
+      <p class="author-bio">
+        Corvus se dedica a desenterrar la verdad oculta detrás de los titulares, especializándose en corrupción, abusos de poder y los impactos de la tecnología en la sociedad mexicana.
+      </p>
+    </aside>
+
+    <article class="article-content">
+      <div class="article-meta">
+        <span class="article-category" style={`background: ${categoryInfo?.color}`}>
+          {categoryInfo?.name}
+        </span>
+        <span>{formatDateTime(date)}</span>
+      </div>
+      
+      <h1 class="article-title">{title}</h1>
+      
+      {description && (
+        <p class="article-subtitle">{description}</p>
+      )}
+      
+      {image && (
+        <div class="article-image">
+          <span>{image}</span>
+        </div>
+      )}
+      
+      <div class="article-body">
+        <slot />
+      </div>
+    </article>
+  </div>
+</Layout>

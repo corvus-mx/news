@@ -1,0 +1,65 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { CATEGORIES, getNewsByCategory, formatDate } from '../../../utils/newsUtils.js';
+
+export async function getStaticPaths() {
+  return Object.keys(CATEGORIES).map(category => ({
+    params: { category }
+  }));
+}
+
+const { category } = Astro.params;
+const categoryInfo = CATEGORIES[category];
+const news = await getNewsByCategory(category);
+---
+
+<Layout title={`${categoryInfo.name} · Corvus News`}>
+  <br/><br/><br/>
+  
+  <main style="padding-top: 80px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+      <!-- Header -->
+      <div style="text-align: center; margin-bottom: 3rem; padding: 2rem; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-primary);">
+        <h1 style={`font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);`}>
+          {categoryInfo.name} {categoryInfo.icon}
+        </h1>
+      </div>
+
+      <!-- News Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+        {news.length === 0 ? (
+          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-muted);">
+            <h3>No hay noticias disponibles en esta categoría</h3>
+            <p>Pronto publicaremos más investigaciones sobre {categoryInfo.name.toLowerCase()}.</p>
+          </div>
+        ) : (
+          news.map(article => (
+            <article style="background: var(--bg-card); border: 1px solid var(--border-primary); border-radius: var(--radius-lg); overflow: hidden; transition: var(--transition);">
+              <div style={`width: 100%; height: 200px; background: linear-gradient(135deg, ${categoryInfo.color}, var(--bg-secondary)); display: flex; align-items: center; justify-content: center;`}>
+                <span style="font-size: 3rem; color: white; opacity: 0.8;">{categoryInfo.icon}</span>
+              </div>
+              <div style="padding: 2rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: var(--text-muted);">
+                  <span style={`background: ${categoryInfo.color}; color: white; padding: 0.25rem 0.75rem; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.75rem;`}>
+                    {categoryInfo.name.toUpperCase()}
+                  </span>
+                  <span>{formatDate(article.date)}</span>
+                  <span>{article.author}</span>
+                </div>
+                <h3 style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">
+                  {article.title}
+                </h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
+                  {article.excerpt}
+                </p>
+                <a href={article.url} style={`color: ${categoryInfo.color}; text-decoration: none; font-weight: 600;`}>
+                  Leer noticia completa →
+                </a>
+              </div>
+            </article>
+          ))
+        )}
+      </div>
+    </div>
+  </main>
+</Layout>
