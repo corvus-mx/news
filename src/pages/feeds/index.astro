@@ -65,7 +65,6 @@ for (const [key, info] of Object.entries(CATEGORIES)) {
     
     .category-card:hover {
       transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
       border-color: var(--accent-primary);
     }
     
@@ -145,7 +144,6 @@ for (const [key, info] of Object.entries(CATEGORIES)) {
     <section class="categories-grid">
       {Object.entries(categoryStats).map(([key, stats]) => (
         <div class="category-card" style={`border-color: ${stats.color}`}>
-          <span class="category-icon" style={`color: ${stats.color}`}>{stats.icon}</span>
           <h2 class="category-title">{stats.name}</h2>
           <p class="category-description">
             {key === 'soberania' && 'Noticias sobre defensa de la soberanía nacional, independencia energética, decisiones estratégicas y protección de recursos naturales.'}
@@ -157,7 +155,7 @@ for (const [key, info] of Object.entries(CATEGORIES)) {
             <span>{stats.count} noticias</span>
             <span>{stats.lastUpdate ? 'Actualizado recientemente' : 'Sin noticias'}</span>
           </div>
-          <a href={`/feeds/${key}/`} class="category-action" style={`background: ${stats.color}`}>
+          <a href={`/news/feeds/${key}/`} class="category-action" style={`background: ${stats.color}`}>
             Ver Noticias
           </a>
         </div>

@@ -1,50 +1,90 @@
-🦉 CORVUS — MexiLeaks
+# Corvus News - Sistema Modular con Astro
 
-CORVUS — MexiLeaks es un medio de periodismo de investigación independiente y distribuido, inspirado en la resiliencia de Wikileaks, adaptado a México y América Latina.
-Su objetivo es exponer redes de corrupción, fraudes, desapariciones, cibercrimen y filtraciones de interés público, protegiendo siempre la identidad de sus fuentes.
+## 🚀 Cómo agregar noticias fácilmente
 
-⸻
+### Estructura de carpetas para noticias:
 
-✊ ¿Qué hacemos?
-	•	Verificamos filtraciones y documentos de alto impacto.
-	•	Publicamos reportajes periodísticos con evidencias forenses.
-	•	Replicamos cada historia para que nunca pueda ser silenciada.
-	•	Mantenemos toda nuestra red imposible de hackear: sin bases de datos ni formularios vulnerables.
+```
+src/content/feeds/
+├── soberania/
+│   ├── 2025-001/
+│   │   └── index.md
+│   ├── 2025-002/
+│   │   └── index.md
+│   └── ...
+├── corrupcion-justicia/
+│   ├── 2025-001/
+│   │   └── index.md
+│   └── ...
+├── internacional-geopolitica/
+│   └── ...
+└── crimen-organizado/
+    └── ...
+```
 
-⸻
+### Para agregar una nueva noticia:
 
-🔐 ¿Cómo puedes filtrar de forma segura?
+1. **Crea una nueva carpeta** con el formato `2025-XXX` (donde XXX es el número consecutivo)
+2. **Dentro de la carpeta**, crea un archivo `index.md`
+3. **Usa este formato** para el archivo:
 
-CORVUS — MexiLeaks nunca pide datos personales.
-Tu seguridad es nuestra prioridad:
-	•	Usa Tor Browser o Tails OS para conectarte.
-	•	Envía información cifrada con nuestra clave pública PGP.
-	•	Usa un ProtonMail anónimo para proteger tu IP.
-	•	También puedes contactarnos vía Signal como canal alternativo.
+```markdown
+---
+title: "Título de tu noticia"
+excerpt: "Resumen breve de la noticia que aparecerá en las tarjetas"
+date: "2025-01-16T10:30:00Z"
+author: "Corvus"
+featured: true
+tags: ["tag1", "tag2", "tag3"]
+---
 
-Consulta la Guía OPSEC para aprender cómo enviar tu noticia de forma anónima y segura.
+Aquí va el contenido completo de tu noticia en Markdown.
 
-⸻
+## Puedes usar subtítulos
 
-🗞️ ¿Dónde se publican las filtraciones?
+Y todo el formato de Markdown que necesites.
 
-Cada filtración verificada se convierte en una noticia o reportaje dentro de la sección de Noticias.
-Cada nota incluye:
-	•	Contexto periodístico.
-	•	Evidencias originales.
-	•	Descargas vía Torrent o IPFS si aplica.
-	•	Hashes SHA-256 para validar integridad.
+**Texto en negrita**, *cursiva*, listas, etc.
+```
 
-⸻
+### Ejemplo práctico:
 
-🗝️ Contacto seguro
-	•	📧 ProtonMail: corvusleaks@protonmail.com
-	•	🔑 Descargar clave pública PGP
-	•	📲 Signal: enlace disponible en la Guía OPSEC
+Para agregar una nueva noticia de soberanía:
 
-⸻
+1. Crea: `src/content/feeds/soberania/2025-002/index.md`
+2. Agrega el contenido con el frontmatter
+3. ¡Listo! La noticia aparecerá automáticamente en:
+   - Página principal (si es la más reciente)
+   - Sección de soberanía
+   - Página de todas las noticias
 
-🦉 CORVUS — MexiLeaks
+### Características automáticas:
 
-Periodismo de investigación. Filtración anónima. Evidencia verificada.
-Imposible de silenciar.
+- ✅ **Detección automática** de la noticia más reciente
+- ✅ **Generación automática** de URLs (`/feeds/soberania/2025-002/`)
+- ✅ **Colores por categoría** automáticos
+- ✅ **Ordenamiento por fecha** automático
+- ✅ **Responsive** en todos los dispositivos
+- ✅ **SEO optimizado**
+
+### Comandos:
+
+```bash
+# Desarrollo
+npm run dev
+
+# Build para producción
+npm run build
+
+# Preview del build
+npm run preview
+```
+
+### Categorías disponibles:
+
+- `soberania` - Color verde (#00cc66)
+- `corrupcion-justicia` - Color naranja (#ff9500)  
+- `internacional-geopolitica` - Color azul (#007acc)
+- `crimen-organizado` - Color rojo (#cc0000)
+
+¡Solo necesitas crear las carpetas con las noticias y el sistema se encarga del resto!

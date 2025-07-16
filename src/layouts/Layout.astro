@@ -4,7 +4,7 @@ export interface Props {
   description?: string;
 }
 
-const { title, description = "Corvus News - Periodismo Independiente por la Soberanía de México" } = Astro.props;
+const { title, description = "Corvus News - Periodismo Independiente y Riguroso" } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -16,7 +16,7 @@ const { title, description = "Corvus News - Periodismo Independiente por la Sobe
   <meta name="color-scheme" content="light dark">
   <title>{title}</title>
   <meta name="description" content={description}>
-  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/news/assets/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
@@ -24,16 +24,16 @@ const { title, description = "Corvus News - Periodismo Independiente por la Sobe
   <!-- Navigation -->
   <nav class="topbar" id="topbar">
     <div class="topbar-container">
-      <a href="/" class="topbar-brand">
+      <a href="/news/" class="topbar-brand">
         <span class="brand-text">Corvus News</span>
       </a>
       
       <div class="nav-desktop">
-        <a href="/noticias/" class="nav-link">Ultimas Noticias</a>
-        <a href="/feeds/" class="nav-link">Categorias</a>
-        <a href="/guia/" class="nav-link">Guía Segura</a>
-        <a href="/mirrors/" class="nav-link">Mirrors</a>
-        <a href="/contacto/" class="nav-cta">Contacto</a>
+        <a href="/news/noticias/" class="nav-link">Noticias</a>
+        <a href="/news/feeds/" class="nav-link">Categorías</a>
+        <a href="/news/guia/" class="nav-link">Guía Segura</a>
+        <a href="/news/mirrors/" class="nav-link">Mirrors</a>
+        <a href="/news/contacto/" class="nav-cta">Contacto</a>
       </div>
       
       <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Abrir menú">
@@ -42,11 +42,11 @@ const { title, description = "Corvus News - Periodismo Independiente por la Sobe
     </div>
     
     <div class="nav-mobile" id="nav-mobile">
-      <a href="/noticias/" class="nav-link">Ultimas Noticias</a>
-      <a href="/feeds/" class="nav-link">Categorias</a>
-      <a href="/guia/" class="nav-link">Guía Segura</a>
-      <a href="/mirrors/" class="nav-link">Mirrors</a>
-      <a href="/contacto/" class="nav-cta">Contacto</a>
+      <a href="/news/noticias/" class="nav-link">Noticias</a>
+      <a href="/news/feeds/" class="nav-link">Categorías</a>
+      <a href="/news/guia/" class="nav-link">Guía Segura</a>
+      <a href="/news/mirrors/" class="nav-link">Mirrors</a>
+      <a href="/news/contacto/" class="nav-cta">Contacto</a>
     </div>
   </nav>
 
@@ -60,24 +60,24 @@ const { title, description = "Corvus News - Periodismo Independiente por la Sobe
       <div class="footer-section">
         <h3>Corvus News</h3>
         <p style="color: var(--text-secondary); margin-bottom: 1rem;">
-          Periodismo independiente al servicio de México. Defendemos la soberanía a través de la verdad.
+          Periodismo independiente y riguroso. Información verificada y análisis profundo.
         </p>
       </div>
       
       <div class="footer-section">
         <h3>Noticias</h3>
         <ul>
-          <li><a href="/noticias/">Todas las Noticias</a></li>
-          <li><a href="/feeds/">Categorías</a></li>
+          <li><a href="/news/noticias/">Todas las Noticias</a></li>
+          <li><a href="/news/feeds/">Categorías</a></li>
         </ul>
       </div>
       
       <div class="footer-section">
         <h3>Para Fuentes</h3>
         <ul>
-          <li><a href="/contacto/">Contacto Seguro</a></li>
-          <li><a href="/guia/">Guía de Seguridad</a></li>
-          <li><a href="/mirrors/">Acceso Alternativo</a></li>
+          <li><a href="/news/contacto/">Contacto Seguro</a></li>
+          <li><a href="/news/guia/">Guía de Seguridad</a></li>
+          <li><a href="/news/mirrors/">Acceso Alternativo</a></li>
         </ul>
       </div>
       
@@ -92,7 +92,7 @@ const { title, description = "Corvus News - Periodismo Independiente por la Sobe
     </div>
     
     <div class="footer-bottom">
-      <p>&copy; 2025 Corvus News. Periodismo independiente por la soberanía de México.</p>
+      <p>&copy; 2025 Corvus News. Periodismo independiente y verificado.</p>
     </div>
   </footer>
 

@@ -46,6 +46,7 @@ export async function getNewsByCategory(category) {
           slug: newsId,
           category,
           categoryInfo: CATEGORIES[category],
+          image: `/feeds/${category}/${newsId}/img1.png`,
           ...frontmatter,
           content,
           url: `/feeds/${category}/${newsId}/`

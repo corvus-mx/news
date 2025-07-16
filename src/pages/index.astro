@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getAllNews, getLatestNews, CATEGORIES, formatDate } from '../utils/newsUtils.js';
+import { getAllNews, getLatestNews, formatDate } from '../utils/newsUtils.js';
 
 const latestNews = await getLatestNews();
 const allNews = await getAllNews();
@@ -8,7 +8,7 @@ const secondaryNews = allNews.slice(1, 4);
 const additionalNews = allNews.slice(4, 7);
 ---
 
-<Layout title="Corvus News · Periodismo Independiente por la Soberanía de México">
+<Layout title="Corvus News · Periodismo Independiente y Riguroso">
   <br/><br/>
   
   <!-- Hero Section -->
@@ -18,18 +18,18 @@ const additionalNews = allNews.slice(4, 7);
     </div>
     
     <h1 class="hero-title">
-      Defendemos la Soberanía<br>
-      a Través del Periodismo
+      Periodismo Independiente<br>
+      y Riguroso
     </h1>
     
     <p class="hero-subtitle">
-      Somos el medio independiente que México necesita. Investigamos, verificamos y publicamos 
-      las historias que otros no se atreven a contar. Nuestro compromiso es con la verdad, 
-      la transparencia y la defensa de la soberanía nacional a través del periodismo riguroso.
+      Investigamos, verificamos y publicamos las historias que importan. 
+      Nuestro compromiso es con la verdad, la transparencia y el periodismo 
+      de calidad que la sociedad necesita.
     </p>
     
     <div class="hero-actions">
-      <a href="/noticias/" class="btn btn-primary">
+      <a href="/news/noticias/" class="btn btn-primary">
         Leer Noticias
       </a>
       <a href="#soberania" class="btn btn-secondary">
@@ -40,19 +40,19 @@ const additionalNews = allNews.slice(4, 7);
     <div class="trust-indicators">
       <div class="trust-card">
         <h3 class="trust-title">Periodismo Riguroso</h3>
-        <p class="trust-desc">Cada investigación pasa por múltiples verificaciones y análisis de expertos</p>
+        <p class="trust-desc">Cada investigación pasa por verificación exhaustiva y análisis profesional</p>
       </div>
       <div class="trust-card">
         <h3 class="trust-title">Independencia Total</h3>
-        <p class="trust-desc">Sin compromisos políticos ni económicos. Solo la verdad al servicio de México</p>
+        <p class="trust-desc">Sin compromisos políticos ni económicos. Solo la verdad y la información verificada</p>
       </div>
       <div class="trust-card">
-        <h3 class="trust-title">Defensa de la Soberanía</h3>
-        <p class="trust-desc">Exponemos amenazas internas y externas que comprometen nuestra independencia nacional</p>
+        <h3 class="trust-title">Análisis Profundo</h3>
+        <p class="trust-desc">Investigaciones detalladas que van más allá de la superficie de los hechos</p>
       </div>
       <div class="trust-card">
         <h3 class="trust-title">Transparencia Radical</h3>
-        <p class="trust-desc">Publicamos nuestras fuentes, metodología y proceso de verificación</p>
+        <p class="trust-desc">Metodología clara y proceso de verificación transparente en cada reportaje</p>
       </div>
     </div>
   </section>
@@ -61,14 +61,18 @@ const additionalNews = allNews.slice(4, 7);
   <section class="news-section">
     <div class="section-header">
       <h2 class="section-title">Noticias Destacadas</h2>
-      <a href="/noticias/" class="view-all">Ver todas las noticias</a>
+      <a href="/news/noticias/" class="view-all">Ver todas las noticias</a>
     </div>
     
     <div class="featured-news">
       {latestNews && (
         <article class="main-story">
           <div class="story-image">
-            <span class="story-placeholder">{latestNews.categoryInfo?.icon || '📰'}</span>
+            {latestNews.image ? (
+              <img src={latestNews.image} alt={latestNews.title} loading="lazy" />
+            ) : (
+              <span class="story-placeholder">Imagen no disponible</span>
+            )}
           </div>
           <div class="story-content">
             <div class="story-meta">
@@ -110,7 +114,11 @@ const additionalNews = allNews.slice(4, 7);
       {additionalNews.map(news => (
         <article class="news-card">
           <div class="story-image">
-            <span class="story-placeholder">{news.categoryInfo?.icon || '📰'}</span>
+            {news.image ? (
+              <img src={news.image} alt={news.title} loading="lazy" />
+            ) : (
+              <span class="story-placeholder">Imagen no disponible</span>
+            )}
           </div>
           <div class="story-content">
             <div class="story-meta">
@@ -136,10 +144,10 @@ const additionalNews = allNews.slice(4, 7);
     <div class="security-content">
       <h2 class="security-title">Apoya el Periodismo Independiente</h2>
       <p class="security-desc">
-        Corvus News es un medio completamente independiente que no recibe financiamiento 
-        de gobiernos, partidos políticos o grandes corporaciones. Tu apoyo nos permite mantener 
-        nuestra independencia editorial y continuar con nuestras investigaciones que defienden 
-        la soberanía nacional.
+        Corvus News es completamente independiente. No recibimos financiamiento 
+        de gobiernos, partidos políticos o grandes corporaciones. Tu apoyo nos permite 
+        mantener nuestra independencia editorial y continuar con investigaciones 
+        de calidad que la sociedad necesita.
       </p>
       
       <div class="security-features">
@@ -158,7 +166,7 @@ const additionalNews = allNews.slice(4, 7);
       </div>
       
       <div class="hero-actions" style="margin-top: 2rem;">
-        <a href="/donaciones/" class="btn btn-primary">Realizar Donación</a>
+        <a href="/news/donaciones/" class="btn btn-primary">Realizar Donación</a>
         <a href="#transparencia" class="btn btn-secondary">Ver Transparencia Financiera</a>
       </div>
     </div>
@@ -167,12 +175,12 @@ const additionalNews = allNews.slice(4, 7);
   <!-- Sovereignty Section -->
   <section class="security-section" id="soberania">
     <div class="security-content">
-      <h2 class="security-title">Periodismo por la Soberanía Nacional</h2>
+      <h2 class="security-title">Compromiso con la Verdad</h2>
       <p class="security-desc">
-        Creemos que un México soberano necesita ciudadanos informados. Nuestro periodismo 
-        expone las amenazas internas y externas que comprometen nuestra independencia, 
-        desde la corrupción que debilita nuestras instituciones hasta las influencias 
-        foráneas que buscan subordinar nuestras decisiones nacionales.
+        Una sociedad informada es una sociedad libre. Nuestro periodismo investiga 
+        y expone los temas que afectan a la ciudadanía, desde la corrupción que 
+        debilita las instituciones hasta los procesos que impactan la vida pública 
+        y el bienestar social.
       </p>
       
       <div class="security-features">
@@ -191,8 +199,8 @@ const additionalNews = allNews.slice(4, 7);
       </div>
       
       <div class="hero-actions" style="margin-top: 2rem;">
-        <a href="/contacto/" class="btn btn-primary">Contactar Redacción</a>
-        <a href="/noticias/" class="btn btn-secondary">Archivo de Investigaciones</a>
+        <a href="/news/contacto/" class="btn btn-primary">Contactar Redacción</a>
+        <a href="/news/noticias/" class="btn btn-secondary">Archivo de Investigaciones</a>
       </div>
     </div>
   </section>
