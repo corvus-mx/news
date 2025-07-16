@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investigaciones · Corvus News</title>
+  <meta name="description" content="Todas las investigaciones y filtraciones verificadas de Corvus News. Periodismo de investigación independiente.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../js/news-data.js"></script>
+  <style>
+    .news-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .news-hero {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 3rem 0;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-primary);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .news-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+    
+    .news-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .news-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+    
+    .news-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-secondary);
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-primary);
+    }
+    
+    .stat-icon {
+      color: var(--accent-primary);
+      font-size: 1.25rem;
+    }
+    
+    .stat-number {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+    
+    .filters {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      color: var(--text-secondary);
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-xl);
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--accent-primary);
+      color: var(--bg-primary);
+      border-color: var(--accent-primary);
+    }
+    
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .news-article {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    .news-article:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-primary);
+    }
+    
+    .article-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, var(--accent-tertiary), var(--bg-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .article-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(0, 212, 255, 0.1) 50%, transparent 70%);
+      animation: shimmer 3s infinite;
+    }
+    
+    .article-placeholder {
+      font-size: 3rem;
+      color: var(--accent-primary);
+      opacity: 0.5;
+    }
+    
+    .article-content {
+      padding: 2rem;
+    }
+    
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+    
+    .article-category {
+      background: var(--accent-primary);
+      color: var(--bg-primary);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .article-category.exclusive {
+      background: var(--success);
+    }
+    
+    .article-category.analysis {
+      background: var(--warning);
+    }
+    
+    .article-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    .article-excerpt {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    
+    .article-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    .article-link:hover {
+      color: var(--accent-secondary);
+      transform: translateX(4px);
+    }
+    
+    .load-more {
+      text-align: center;
+      margin: 3rem 0;
+    }
+    
+    .load-more-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      color: var(--text-primary);
+      padding: 1rem 2rem;
+      border-radius: var(--radius-xl);
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .load-more-btn:hover {
+      background: var(--bg-elevated);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+    
+    .featured-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      margin-bottom: 4rem;
+    }
+    
+    .featured-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+    
+    .featured-main {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-primary);
+    }
+    
+    .featured-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .featured-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      transition: var(--transition);
+    }
+    
+    .featured-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent-primary);
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    @media (max-width: 1024px) {
+      .featured-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .news-container {
+        padding: 1rem;
+      }
+      
+      .news-title {
+        font-size: 2rem;
+      }
+      
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .news-stats {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .filters {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+      }
+      
+      .filter-btn {
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="topbar">
+    <div class="topbar-container">
+      <a href="../index.html" class="topbar-brand">
+        <span class="brand-text">Corvus News</span>
+      </a>
+      
+      <div class="nav-desktop">
+        <a href="index.html" class="nav-link">
+          Investigaciones
+        </a>
+        <a href="../guia.html" class="nav-link">
+          Guía Segura
+        </a>
+        <a href="../mirrors.html" class="nav-link">
+          Mirrors
+        </a>
+        <a href="../contacto.html" class="nav-cta">
+          Contacto
+        </a>
+      </div>
+      
+      <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Abrir menú">
+        <span id="menu-icon">☰</span>
+      </button>
+    </div>
+    
+    
+    <div class="nav-desktop">
+        <a href="noticias/" class="nav-link">
+          Ultimas Noticias
+        </a>
+        <a href="feeds/" class="nav-link">
+          Categorias
+        </a>
+        <a href="guia.html" class="nav-link">
+          Guía Segura
+        </a>
+        <a href="mirrors.html" class="nav-link">
+          Mirrors
+        </a>
+        <a href="contacto.html" class="nav-cta">
+          Contacto
+        </a>
+      </div>
+  </nav>
+<br/>
+  <br/>
+  <br/>
+  <main>
+    <div class="news-container">
+      
+
+      <!-- Featured Section -->
+      <br/>
+      <br/>
+      <section class="featured-section">
+        <h2 class="featured-title">
+          🔥 Noticia Más Reciente
+        </h2>
+        
+        <div class="featured-grid" id="featured-news-container">
+          <!-- La noticia más reciente se cargará aquí automáticamente -->
+        </div>
+      </section>
+
+      <!-- Filters -->
+      <section class="filters">
+        <button class="filter-btn active" data-filter="all">
+          Todas
+        </button>
+        <button class="filter-btn" data-filter="soberania">
+          Soberanía
+        </button>
+        <button class="filter-btn" data-filter="corrupcion">
+          Corrupción y Justicia
+        </button>
+        <button class="filter-btn" data-filter="internacional">
+          Internacional
+        </button>
+        <button class="filter-btn" data-filter="crimen">
+          Crimen Organizado
+        </button>
+        <button class="filter-btn" data-filter="recientes">
+          Recientes
+        </button>
+      </section>
+
+      <!-- News Grid -->
+      <section class="news-grid" id="news-grid">
+        <!-- Articles will be loaded dynamically -->
+      </section>
+
+      <!-- Load More -->
+      <section class="load-more">
+        <button class="load-more-btn" onclick="loadMoreArticles()">
+          Cargar más noticias
+        </button>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>
+          Corvus News
+        </h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+          Investigaciones verificadas que exponen la corrupción y protegen a las fuentes.
+        </p>
+      </div>
+      
+      <div class="footer-section">
+        <h3>
+          Noticias Destacadas
+        </h3>
+        <ul>
+          <li><a href="2025/caso-001/index.html">Red de Sobornos Municipales</a></li>
+          <li><a href="investigacion-contratos.html">Contratos Fantasma</a></li>
+          <li><a href="#">Audio Compromete Funcionario</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>
+          Para Fuentes
+        </h3>
+        <ul>
+          <li><a href="../guia.html">Guía de Seguridad</a></li>
+          <li><a href="../contacto.html">Contacto Seguro</a></li>
+          <li><a href="../assets/pgp-key.asc">Clave PGP</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>
+          Categorías
+        </h3>
+        <ul>
+          <li><a href="../feeds/">Feeds por Categoría</a></li>
+          <li><a href="../feeds/soberania/">Soberanía</a></li>
+          <li><a href="../feeds/corrupcion-justicia/">Corrupción</a></li>
+          <li><a href="../index.html">Inicio</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Corvus News. Periodismo independiente.</p>
+      <p>Noticias verificadas, fuentes protegidas, verdad expuesta.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Sample articles data
+    let currentFilter = 'all';
+    let displayedArticles = 6;
+
+    // Mobile menu functionality
+    function toggleMobileMenu() {
+      const mobileNav = document.getElementById('nav-mobile');
+      const menuIcon = document.getElementById('menu-icon');
+      
+      mobileNav.classList.toggle('show');
+      menuIcon.textContent = mobileNav.classList.contains('show') ? '✕' : '☰';
+    }
+
+    // Filter functionality
+    function setupFilters() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from all buttons
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          
+          // Add active class to clicked button
+          this.classList.add('active');
+          
+          // Update current filter
+          currentFilter = this.dataset.filter;
+          
+          // Re-render articles
+          renderArticles();
+        });
+      });
+    }
+
+    // Render articles based on current filter
+    function renderArticles() {
+      const newsGrid = document.getElementById('news-grid');
+      let filteredArticles = NewsManager.getAllNews();
+      
+      // Apply filter
+      if (currentFilter !== 'all') {
+        if (currentFilter === 'recientes') {
+          filteredArticles = filteredArticles.slice(0, 3);
+        } else {
+          filteredArticles = NewsManager.getNewsByCategory(currentFilter);
+        }
+      }
+      
+      // Limit to displayed articles count
+      const articlesToShow = filteredArticles.slice(0, displayedArticles);
+      
+      // Clear grid
+      newsGrid.innerHTML = '';
+      
+      // Render articles
+      articlesToShow.forEach(article => {
+        const articleElement = document.createElement('article');
+        articleElement.className = 'news-article';
+        const categoryColor = NewsManager.getCategoryColor(article.category);
+        articleElement.innerHTML = `
+          <div class="article-image">
+            <span class="article-placeholder">${article.image}</span>
+          </div>
+          <div class="article-content">
+            <div class="article-meta">
+              <span class="article-category" style="background: ${categoryColor}">${article.categoryLabel}</span>
+              <span>${NewsManager.formatDate(article.date)}</span>
+              <span>${article.author}</span>
+            </div>
+            <h3 class="article-title">${article.title}</h3>
+            <p class="article-excerpt">${article.excerpt}</p>
+            <a href="${article.link}" class="article-link">
+              Leer noticia
+            </a>
+          </div>
+        `;
+        newsGrid.appendChild(articleElement);
+      });
+      
+      // Update load more button visibility
+      const loadMoreBtn = document.querySelector('.load-more');
+      if (articlesToShow.length >= filteredArticles.length) {
+        loadMoreBtn.style.display = 'none';
+      } else {
+        loadMoreBtn.style.display = 'block';
+      }
+    }
+
+    // Render featured news (latest news)
+    function renderFeaturedNews() {
+      const container = document.getElementById('featured-news-container');
+      const latestNews = NewsManager.getLatestNews();
+      
+      if (!latestNews) return;
+      
+      const categoryColor = NewsManager.getCategoryColor(latestNews.category);
+      container.innerHTML = `
+        <article class="featured-main">
+          <div class="article-image">
+            <span class="article-placeholder">${latestNews.image}</span>
+          </div>
+          <div class="article-content">
+            <div class="article-meta">
+              <span class="article-category" style="background: ${categoryColor}">${latestNews.categoryLabel}</span>
+              <span>${NewsManager.formatDateTime(latestNews.date)}</span>
+              <span>${latestNews.author}</span>
+            </div>
+            <h3 class="article-title">${latestNews.title}</h3>
+            <p class="article-excerpt">${latestNews.excerpt}</p>
+            <a href="${latestNews.link}" class="article-link">
+              Leer noticia completa
+            </a>
+          </div>
+        </article>
+      `;
+    }
+
+    // Load more articles
+    function loadMoreArticles() {
+      displayedArticles += 6;
+      renderArticles();
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const mobileNav = document.getElementById('nav-mobile');
+      const menuToggle = document.querySelector('.menu-toggle');
+      
+      if (!mobileNav.contains(event.target) && !menuToggle.contains(event.target)) {
+        mobileNav.classList.remove('show');
+        document.getElementById('menu-icon').textContent = '☰';
+      }
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const topbar = document.querySelector('.topbar');
+      if (window.scrollY > 100) {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        topbar.style.background = isDark ? 'rgba(0, 0, 0, 0.98)' : 'rgba(255, 255, 255, 0.98)';
+        topbar.style.boxShadow = isDark ? '0 4px 20px rgba(255, 255, 255, 0.1)' : '0 4px 20px rgba(0, 0, 0, 0.1)';
+      } else {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        topbar.style.background = isDark ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+        topbar.style.boxShadow = 'none';
+      }
+    });
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      setupFilters();
+      renderFeaturedNews();
+      renderArticles();
+      
+      // Add loading animation to article links
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('.article-link')) {
+          const link = e.target.closest('.article-link');
+          if (link.href && link.href !== '#') {
+            link.style.opacity = '0.6';
+            setTimeout(() => {
+              link.style.opacity = '1';
+            }, 1000);
+          }
+        }
+      });
+    });
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

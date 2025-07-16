@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noticias por Categoría · Corvus News</title>
+  <meta name="description" content="Noticias organizadas por categorías: Soberanía, Corrupción y Justicia, Internacional y Geopolítica, Crimen Organizado.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .feeds-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .feeds-hero {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 3rem 0;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-primary);
+    }
+    
+    .feeds-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    .feeds-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .category-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      transition: var(--transition);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-primary);
+    }
+    
+    .category-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    
+    .category-card.soberania {
+      border-color: #00cc66;
+    }
+    
+    .category-card.soberania .category-icon {
+      color: #00cc66;
+    }
+    
+    .category-card.corrupcion {
+      border-color: #ff9500;
+    }
+    
+    .category-card.corrupcion .category-icon {
+      color: #ff9500;
+    }
+    
+    .category-card.internacional {
+      border-color: #007acc;
+    }
+    
+    .category-card.internacional .category-icon {
+      color: #007acc;
+    }
+    
+    .category-card.crimen {
+      border-color: #cc0000;
+    }
+    
+    .category-card.crimen .category-icon {
+      color: #cc0000;
+    }
+    
+    .category-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    .category-description {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    
+    .category-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    
+    .category-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      border-radius: var(--radius-xl);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      font-size: 1.125rem;
+    }
+    
+    .category-card.soberania .category-action {
+      background: #00cc66;
+      color: white;
+    }
+    
+    .category-card.corrupcion .category-action {
+      background: #ff9500;
+      color: white;
+    }
+    
+    .category-card.internacional .category-action {
+      background: #007acc;
+      color: white;
+    }
+    
+    .category-card.crimen .category-action {
+      background: #cc0000;
+      color: white;
+    }
+    
+    .category-action:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    @media (max-width: 768px) {
+      .feeds-container {
+        padding: 1rem;
+      }
+      
+      .feeds-title {
+        font-size: 2rem;
+      }
+      
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="topbar">
+    <div class="topbar-container">
+      <a href="../index.html" class="topbar-brand">
+        <span class="brand-text">Corvus MexiLeaks</span>
+      </a>
+      
+      <div class="nav-desktop">
+        <a href="../noticias/" class="nav-link">
+          Ultimas Noticias
+        </a>
+        <a href="../guia.html" class="nav-link">
+          Guía Segura
+        </a>
+        <a href="../mirrors.html" class="nav-link">
+          Mirrors
+        </a>
+        <a href="../contacto.html" class="nav-cta">
+          Contacto
+        </a>
+      </div>
+      
+      <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Abrir menú">
+        <span id="menu-icon">☰</span>
+      </button>
+    </div>
+    
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="../noticias/" class="nav-link">
+        Ultimas Noticias
+      </a>
+      <a href="../guia.html" class="nav-link">
+        Guía Segura
+      </a>
+      <a href="../mirrors.html" class="nav-link">
+        Mirrors
+      </a>
+      <a href="../contacto.html" class="nav-cta">
+        Contacto
+      </a>
+    </div>
+  </nav>
+<br/>
+  <br/>
+  <br/>
+  <main>
+    <div class="feeds-container">
+      <!-- Hero Section -->
+      <section class="feeds-hero">
+        <h1 class="feeds-title">Noticias por Categoría</h1>
+        <p class="feeds-subtitle">
+          Noticias organizadas por temas específicos para un seguimiento más preciso
+        </p>
+      </section>
+
+      <!-- Categories Grid -->
+      <section class="categories-grid">
+        <!-- Soberanía -->
+        <div class="category-card soberania">
+          <span class="category-icon">🇲🇽</span>
+          <h2 class="category-title">Soberanía</h2>
+          <p class="category-description">
+            Noticias sobre defensa de la soberanía nacional, independencia energética, 
+            decisiones estratégicas y protección de recursos naturales.
+          </p>
+          <div class="category-stats">
+            <span>12 noticias</span>
+            <span>Actualizado hoy</span>
+          </div>
+          <a href="soberania/" class="category-action">
+            Ver Noticias
+          </a>
+        </div>
+
+        <!-- Corrupción y Justicia -->
+        <div class="category-card corrupcion">
+          <span class="category-icon">⚖️</span>
+          <h2 class="category-title">Corrupción y Justicia</h2>
+          <p class="category-description">
+            Investigaciones sobre corrupción, abuso de poder, impunidad y 
+            funcionamiento del sistema de justicia mexicano.
+          </p>
+          <div class="category-stats">
+            <span>18 noticias</span>
+            <span>Actualizado ayer</span>
+          </div>
+          <a href="corrupcion-justicia/" class="category-action">
+            Ver Noticias
+          </a>
+        </div>
+
+        <!-- Internacional y Geopolítica -->
+        <div class="category-card internacional">
+          <span class="category-icon">🌍</span>
+          <h2 class="category-title">Internacional y Geopolítica</h2>
+          <p class="category-description">
+            Análisis de relaciones internacionales, influencia extranjera, 
+            tratados comerciales y posición de México en el mundo.
+          </p>
+          <div class="category-stats">
+            <span>8 noticias</span>
+            <span>Actualizado hace 2 días</span>
+          </div>
+          <a href="internacional-geopolitica/" class="category-action">
+            Ver Noticias
+          </a>
+        </div>
+
+        <!-- Crimen Organizado -->
+        <div class="category-card crimen">
+          <span class="category-icon">🚨</span>
+          <h2 class="category-title">Crimen Organizado</h2>
+          <p class="category-description">
+            Investigaciones sobre narcotráfico, lavado de dinero, 
+            vínculos con autoridades y impacto en la seguridad nacional.
+          </p>
+          <div class="category-stats">
+            <span>15 noticias</span>
+            <span>Actualizado hoy</span>
+          </div>
+          <a href="crimen-organizado/" class="category-action">
+            Ver Noticias
+          </a>
+        </div>
+      </section>
+
+      <!-- RSS Feeds Section 
+      <section style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: var(--radius-lg); padding: 2.5rem; margin: 3rem 0; text-align: center;">
+        <h2 style="font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text-primary);">
+          Feeds RSS Disponibles
+        </h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+          Suscríbete a nuestros feeds RSS para recibir actualizaciones automáticas de cada categoría
+        </p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+          <a href="soberania/feed.xml" style="background: var(--bg-card); border: 1px solid var(--border-primary); padding: 1rem; border-radius: var(--radius-md); text-decoration: none; color: var(--text-primary); transition: var(--transition);">
+            RSS Soberanía
+          </a>
+          <a href="corrupcion-justicia/feed.xml" style="background: var(--bg-card); border: 1px solid var(--border-primary); padding: 1rem; border-radius: var(--radius-md); text-decoration: none; color: var(--text-primary); transition: var(--transition);">
+            RSS Corrupción
+          </a>
+          <a href="internacional-geopolitica/feed.xml" style="background: var(--bg-card); border: 1px solid var(--border-primary); padding: 1rem; border-radius: var(--radius-md); text-decoration: none; color: var(--text-primary); transition: var(--transition);">
+            RSS Internacional
+          </a>
+          <a href="crimen-organizado/feed.xml" style="background: var(--bg-card); border: 1px solid var(--border-primary); padding: 1rem; border-radius: var(--radius-md); text-decoration: none; color: var(--text-primary); transition: var(--transition);">
+            RSS Crimen Organizado
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+-->
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Corvus MexiLeaks</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+          Noticias organizadas por categorías para un mejor seguimiento de los temas que importan.
+        </p>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Categorías</h3>
+        <ul>
+          <li><a href="soberania/">Soberanía</a></li>
+          <li><a href="corrupcion-justicia/">Corrupción y Justicia</a></li>
+          <li><a href="internacional-geopolitica/">Internacional</a></li>
+          <li><a href="crimen-organizado/">Crimen Organizado</a></li>
+        </ul>
+      </div>
+      <!--
+      <div class="footer-section">
+        <h3>Feeds RSS</h3>
+        <ul>
+          <li><a href="soberania/feed.xml">RSS Soberanía</a></li>
+          <li><a href="corrupcion-justicia/feed.xml">RSS Corrupción</a></li>
+          <li><a href="internacional-geopolitica/feed.xml">RSS Internacional</a></li>
+          <li><a href="crimen-organizado/feed.xml">RSS Crimen</a></li>
+        </ul>
+      </div>
+      -->
+      <div class="footer-section">
+        <h3>Navegación</h3>
+        <ul>
+          <li><a href="../noticias/">Todas las Noticias</a></li>
+          <li><a href="../contacto.html">Contacto</a></li>
+          <li><a href="../index.html">Inicio</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Corvus MexiLeaks. Periodismo independiente por categorías.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu functionality
+    function toggleMobileMenu() {
+      const mobileNav = document.getElementById('nav-mobile');
+      const menuIcon = document.getElementById('menu-icon');
+      
+      mobileNav.classList.toggle('show');
+      menuIcon.textContent = mobileNav.classList.contains('show') ? '✕' : '☰';
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const mobileNav = document.getElementById('nav-mobile');
+      const menuToggle = document.querySelector('.menu-toggle');
+      
+      if (!mobileNav.contains(event.target) && !menuToggle.contains(event.target)) {
+        mobileNav.classList.remove('show');
+        document.getElementById('menu-icon').textContent = '☰';
+      }
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const topbar = document.querySelector('.topbar');
+      if (window.scrollY > 100) {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        topbar.style.background = isDark ? 'rgba(0, 0, 0, 0.98)' : 'rgba(255, 255, 255, 0.98)';
+        topbar.style.boxShadow = isDark ? '0 4px 20px rgba(255, 255, 255, 0.1)' : '0 4px 20px rgba(0, 0, 0, 0.1)';
+      } else {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        topbar.style.background = isDark ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+        topbar.style.boxShadow = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
